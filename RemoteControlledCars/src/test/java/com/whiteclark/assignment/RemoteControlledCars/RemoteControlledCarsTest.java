@@ -10,7 +10,7 @@ public class RemoteControlledCarsTest {
 	Position position;
 
 	@Before
-	protected void setUp() throws Exception {
+	public void setUp() throws Exception {
 		position = new Position();
 		rc = new RemoteControlledCars(15, 15);
 	}
@@ -136,7 +136,7 @@ public class RemoteControlledCarsTest {
 	/**
 	 * Test case12 for a invalid input
 	 */
-	@Test(expected = Exception.class)
+	@Test(expected = RuntimeException.class)
 	public void testInvalidInputOne() {
 		position.setXY(-1, -1);
 		rc.move(position, "LF");
@@ -145,7 +145,7 @@ public class RemoteControlledCarsTest {
 	/**
 	 * Test case13 for a invalid input
 	 */
-	@Test(expected = Exception.class)
+	@Test(expected = RuntimeException.class)
 	public void testInvalidInputTwo() {
 		position.setXY(16, 16);
 		rc.move(position, "FF");
@@ -154,7 +154,7 @@ public class RemoteControlledCarsTest {
 	/**
 	 * Test case14 for a invalid input
 	 */
-	@Test(expected = Exception.class)
+	@Test(expected = RuntimeException.class)
 	public void testInvalidInputThree() {
 		position.setXY(1, 1);
 		rc.move(position, "ABCDE");
@@ -163,7 +163,7 @@ public class RemoteControlledCarsTest {
 	/**
 	 * Test case15 for a invalid input
 	 */
-	@Test(expected = Exception.class)
+	@Test(expected = RuntimeException.class)
 	public void testInvalidInputFour() {
 		rc.move(null, "ABCDE");
 	}
@@ -171,7 +171,7 @@ public class RemoteControlledCarsTest {
 	/**
 	 * Test case16 for a invalid input
 	 */
-	@Test(expected = Exception.class)
+	@Test(expected = RuntimeException.class)
 	public void testInvalidInputFive() {
 		rc.move(null, null);
 	}
