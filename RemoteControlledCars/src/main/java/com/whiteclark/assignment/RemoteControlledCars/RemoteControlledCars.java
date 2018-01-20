@@ -1,7 +1,7 @@
 package com.whiteclark.assignment.RemoteControlledCars;
 
 public class RemoteControlledCars {
-	int gridX, gridY;
+	private int gridX, gridY;
 
 	public RemoteControlledCars(int x, int y) {
 		this.gridX = x;
@@ -13,60 +13,36 @@ public class RemoteControlledCars {
 		if (position == null || command == null)
 			throw new RuntimeException("position and command are mandatory");
 
-		int x = position.getX();
-		int y = position.getY();
+		int x = position.getX(), y = position.getY();
 
-		if (x < 1 || x > gridX)
-			throw new RuntimeException("x of position is out of range");
-		if (y < 1 || y > gridY)
-			throw new RuntimeException("y of position is out of range");
+		if (this.isOutOfGrid(x, y))
+			throw new RuntimeException("position is out of range");
 
 		Direction curr = Direction.N;
-
-		command = command.toUpperCase();
-		char[] commands = command.toCharArray();
+		char[] commands = command.toUpperCase().toCharArray();
 
 		for (char c : commands) {
 			if (c == 'F' && curr == Direction.N) {
-
 				x++;
-				if (this.checkGrid(x, y))
-					return null;
-				continue;
-
-			}
-			if (c == 'F' && curr == Direction.E) {
-
+			} else if (c == 'F' && curr == Direction.E) {
 				y++;
-				if (this.checkGrid(x, y))
-					return null;
-				continue;
-			}
-			if (c == 'F' && curr == Direction.S) {
-
+			} else if (c == 'F' && curr == Direction.S) {
 				x--;
-				if (this.checkGrid(x, y))
-					return null;
-				continue;
-			}
-			if (c == 'F' && curr == Direction.W) {
-
+			} else if (c == 'F' && curr == Direction.W) {
 				y--;
-				if (this.checkGrid(x, y))
-					return null;
-				continue;
-			}
-			if (c == 'R' || c == 'L') {
+			} else if (c == 'R' || c == 'L') {
 				curr = curr.getDirection(c);
-				continue;
+			} else {
+				throw new RuntimeException("Invalid Command");
 			}
-			throw new RuntimeException("Invalid Command");
+			if (this.isOutOfGrid(x, y))
+				return null;
 		}
 		position.setXY(x, y);
 		return position;
 	}
 
-	private boolean checkGrid(int x, int y) {
+	private boolean isOutOfGrid(int x, int y) {
 		if (x < 1 || x > gridX)
 			return true;
 		if (y < 1 || y > gridY)
@@ -77,7 +53,7 @@ public class RemoteControlledCars {
 
 enum Direction {
 	N {
-		public Direction getDirection(char command) {
+		Direction getDirection(char command) {
 			if (command == 'L')
 				return W;
 			if (command == 'R')
@@ -86,7 +62,7 @@ enum Direction {
 		}
 	},
 	E {
-		public Direction getDirection(char command) {
+		Direction getDirection(char command) {
 			if (command == 'L')
 				return N;
 			if (command == 'R')
@@ -95,7 +71,7 @@ enum Direction {
 		}
 	},
 	W {
-		public Direction getDirection(char command) {
+		Direction getDirection(char command) {
 			if (command == 'L')
 				return S;
 			if (command == 'R')
@@ -104,7 +80,7 @@ enum Direction {
 		}
 	},
 	S {
-		public Direction getDirection(char command) {
+		Direction getDirection(char command) {
 			if (command == 'L')
 				return E;
 			if (command == 'R')
@@ -113,7 +89,7 @@ enum Direction {
 		}
 	};
 
-	public Direction getDirection(char command) {
+	Direction getDirection(char command) {
 		return N;
 	}
 
