@@ -1,47 +1,37 @@
 package com.whiteclark.assignment.RemoteControlledCars;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.Assert.*;
 
-public class RemoteControlledCarsTest extends TestCase {
+import org.junit.Before;
+import org.junit.Test;
+
+public class RemoteControlledCarsTest {
 	RemoteControlledCars rc;
-
 	Position position;
 
-	public RemoteControlledCarsTest(String testName) {
-		super(testName);
-	}
-
-	/**
-	 * @return the suite of tests being tested
-	 */
-	public static Test suite() {
-		return new TestSuite(RemoteControlledCarsTest.class);
-	}
-
-	@Override
+	@Before
 	protected void setUp() throws Exception {
-		super.setUp();
 		position = new Position();
-		rc = new RemoteControlledCars();
+		rc = new RemoteControlledCars(15, 15);
 	}
 
 	/**
 	 * Test case1 for a positive scenario
 	 */
+	@Test
 	public void testPositiveCaseOne() {
 
 		position.setX(5);
 		position.setY(5);
-		Position result = rc.move(position, "FRF");
-		assertEquals(6, result.getX());
-		assertEquals(6, result.getY());
+		Position result = rc.move(position, "");
+		assertEquals(5, result.getX());
+		assertEquals(5, result.getY());
 	}
 
 	/**
 	 * Test case2 for a positive scenario
 	 */
+	@Test
 	public void testPositiveCaseTwo() {
 		position.setX(1);
 		position.setY(1);
@@ -53,6 +43,7 @@ public class RemoteControlledCarsTest extends TestCase {
 	/**
 	 * Test case3 for a positive scenario
 	 */
+	@Test
 	public void testPositiveCaseThree() {
 		position.setX(15);
 		position.setY(15);
@@ -74,6 +65,7 @@ public class RemoteControlledCarsTest extends TestCase {
 	/**
 	 * Test case5 for a positive scenario
 	 */
+	@Test
 	public void testPositiveCaseFive() {
 		position.setXY(15, 1);
 		Position result = rc.move(position, "RF");
@@ -84,6 +76,7 @@ public class RemoteControlledCarsTest extends TestCase {
 	/**
 	 * Test case6 for a negative scenario
 	 */
+	@Test
 	public void testNegativeCaseOne() {
 		position.setXY(1, 1);
 		Position result = rc.move(position, "LF");
@@ -93,6 +86,7 @@ public class RemoteControlledCarsTest extends TestCase {
 	/**
 	 * Test case7 for a negative scenario
 	 */
+	@Test
 	public void testNegativeCaseTwo() {
 		position.setXY(1, 1);
 		Position result = rc.move(position, "RFRF");
@@ -102,6 +96,7 @@ public class RemoteControlledCarsTest extends TestCase {
 	/**
 	 * Test case8 for a negative scenario
 	 */
+	@Test
 	public void testNegativeCaseThree() {
 		position.setXY(15, 15);
 		Position result = rc.move(position, "F");
@@ -111,6 +106,7 @@ public class RemoteControlledCarsTest extends TestCase {
 	/**
 	 * Test case9 for a negative scenario
 	 */
+	@Test
 	public void testNegativeCaseFour() {
 		position.setXY(15, 15);
 		Position result = rc.move(position, "LFRF");
@@ -120,6 +116,7 @@ public class RemoteControlledCarsTest extends TestCase {
 	/**
 	 * Test case10 for a negative scenario
 	 */
+	@Test
 	public void testNegativeCaseFive() {
 		position.setXY(1, 15);
 		Position result = rc.move(position, "RF");
@@ -129,10 +126,53 @@ public class RemoteControlledCarsTest extends TestCase {
 	/**
 	 * Test case11 for a negative scenario
 	 */
+	@Test
 	public void testNegativeCaseSix() {
 		position.setXY(15, 1);
 		Position result = rc.move(position, "LF");
 		assertNull(result);
 	}
 
+	/**
+	 * Test case12 for a invalid input
+	 */
+	@Test(expected = Exception.class)
+	public void testInvalidInputOne() {
+		position.setXY(-1, -1);
+		rc.move(position, "LF");
+	}
+
+	/**
+	 * Test case13 for a invalid input
+	 */
+	@Test(expected = Exception.class)
+	public void testInvalidInputTwo() {
+		position.setXY(16, 16);
+		rc.move(position, "FF");
+	}
+
+	/**
+	 * Test case14 for a invalid input
+	 */
+	@Test(expected = Exception.class)
+	public void testInvalidInputThree() {
+		position.setXY(1, 1);
+		rc.move(position, "ABCDE");
+	}
+
+	/**
+	 * Test case15 for a invalid input
+	 */
+	@Test(expected = Exception.class)
+	public void testInvalidInputFour() {
+		rc.move(null, "ABCDE");
+	}
+
+	/**
+	 * Test case16 for a invalid input
+	 */
+	@Test(expected = Exception.class)
+	public void testInvalidInputFive() {
+		rc.move(null, null);
+	}
 }
