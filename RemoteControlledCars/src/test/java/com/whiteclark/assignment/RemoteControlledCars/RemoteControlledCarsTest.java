@@ -65,22 +65,74 @@ public class RemoteControlledCarsTest extends TestCase {
 	 * Test case4 for a positive scenario
 	 */
 	public void testPositiveCaseFour() {
-		position.setXY(1,15);
+		position.setXY(1, 15);
 		Position result = rc.move(position, "FR");
 		assertEquals(2, result.getX());
 		assertEquals(15, result.getY());
 	}
-	
+
 	/**
 	 * Test case5 for a positive scenario
 	 */
 	public void testPositiveCaseFive() {
-		position.setXY(15,1);
+		position.setXY(15, 1);
 		Position result = rc.move(position, "RF");
 		assertEquals(15, result.getX());
 		assertEquals(2, result.getY());
 	}
-	
-	
+
+	/**
+	 * Test case6 for a negative scenario
+	 */
+	public void testNegativeCaseOne() {
+		position.setXY(1, 1);
+		Position result = rc.move(position, "LF");
+		assertNull(result);
+	}
+
+	/**
+	 * Test case7 for a negative scenario
+	 */
+	public void testNegativeCaseTwo() {
+		position.setXY(1, 1);
+		Position result = rc.move(position, "RFRF");
+		assertNull(result);
+	}
+
+	/**
+	 * Test case8 for a negative scenario
+	 */
+	public void testNegativeCaseThree() {
+		position.setXY(15, 15);
+		Position result = rc.move(position, "F");
+		assertNull(result);
+	}
+
+	/**
+	 * Test case9 for a negative scenario
+	 */
+	public void testNegativeCaseFour() {
+		position.setXY(15, 15);
+		Position result = rc.move(position, "LFRF");
+		assertNull(result);
+	}
+
+	/**
+	 * Test case10 for a negative scenario
+	 */
+	public void testNegativeCaseFive() {
+		position.setXY(1, 15);
+		Position result = rc.move(position, "RF");
+		assertNull(result);
+	}
+
+	/**
+	 * Test case11 for a negative scenario
+	 */
+	public void testNegativeCaseSix() {
+		position.setXY(15, 1);
+		Position result = rc.move(position, "LF");
+		assertNull(result);
+	}
 
 }
