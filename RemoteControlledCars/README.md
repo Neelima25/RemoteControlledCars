@@ -12,8 +12,8 @@ The following examples should be used to demonstrate your code:
 ## Assumptions
 1. The grid number always starts from 1.
 2. In the position (x,y), x represents the vertical axis and y represents horizantal axis (as per thrid example in the problem statement). 
-3. If the command moves the car out of the grid, then, as there is no new position, 'null' to be returned indicating 'out of grid'.
-4. If the initial position is invalid (ex: -1.-1), then a RuntimeException to be thrown.
+3. If the command moves the car out of the grid, then, as there will be no new position, 'null' to be returned indicating 'off the grid'.
+4. If the initial position is invalid (ex: -1.-1) or commands are invalid, then a RuntimeException to be thrown.
  
 ## Solution
 #### Classes Used
@@ -28,13 +28,13 @@ The following examples should be used to demonstrate your code:
 #### Implementation
 1. The Position object represents the car and holds its current position in x,y properties.
 2. The size of the grid can be set while initializing the 'RemoteControlledCars' object, default value is 15.
-     - If the grid is initialized with a non-natural number, exception is thrown by move() method. 
+     - If the grid is initialized with a non-natural number, then a RuntimeException is thrown by the move() method. 
 3. The 'move()' method in the class 'RemoteControlledCars' takes two arguments, the position object which represents the car's position and the commands as a string. If,
-       - input is invalid (current position is out of grid or command not in 'RLF') then RuntimeException is thrown.
+     - input is invalid (current position is out of grid or commands has characters that are not in 'R', 'L', 'F') then RuntimeException is thrown.
      - the current position is valid and the command takes the car 'out of the grid', then null is returned.
      - the input is valid and the command moves the car inside the grid range, then a position object with the new co-ordinates are returned.
 
 
 ## How to run
-- You can run the test class - RemoteControlledCarsTest.java which has ample of unit test scenarios.
-- You can also run main method in 'MainController' class to have a user interface which takes inputs from command-line and outputs result on the console. 
+- You can run the test class - RemoteControlledCarsTest.java which has ample of unit test cases with all positive and negative scenarios.
+- You can also run main method in 'MainController' class to have a user interface which takes inputs from command-line and outputs the result on to the console. 
