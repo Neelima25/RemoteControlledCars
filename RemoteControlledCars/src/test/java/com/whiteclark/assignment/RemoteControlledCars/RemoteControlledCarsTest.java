@@ -16,7 +16,7 @@ public class RemoteControlledCarsTest {
 	}
 
 	/**
-	 * Test case1 for a positive scenario
+	 * Test case1 for a positive scenario with valid position and empty command
 	 */
 	@Test
 	public void testPositiveCaseOne() {
@@ -45,21 +45,20 @@ public class RemoteControlledCarsTest {
 	 */
 	@Test
 	public void testPositiveCaseThree() {
-		position.setX(15);
-		position.setY(15);
-		Position result = rc.move(position, "LFR");
-		assertEquals(15, result.getX());
-		assertEquals(14, result.getY());
+		position.setXY(5, 5);
+		Position result = rc.move(position, "RFLFRFLF");
+		assertEquals(7, result.getX());
+		assertEquals(7, result.getY());
 	}
 
 	/**
 	 * Test case4 for a positive scenario
 	 */
 	public void testPositiveCaseFour() {
-		position.setXY(1, 15);
-		Position result = rc.move(position, "FR");
-		assertEquals(2, result.getX());
-		assertEquals(15, result.getY());
+		position.setXY(6, 6);
+		Position result = rc.move(position, "FFLFFLFFLFF");
+		assertEquals(6, result.getX());
+		assertEquals(6, result.getY());
 	}
 
 	/**
@@ -67,17 +66,17 @@ public class RemoteControlledCarsTest {
 	 */
 	@Test
 	public void testPositiveCaseFive() {
-		position.setXY(15, 1);
-		Position result = rc.move(position, "RF");
-		assertEquals(15, result.getX());
-		assertEquals(2, result.getY());
+		position.setXY(5, 5);
+		Position result = rc.move(position, "FLFLFFRFFF");
+		assertEquals(4, result.getX());
+		assertEquals(1, result.getY());
 	}
 
 	/**
-	 * Test case6 for a negative scenario
+	 * Test case6 for a negative scenario to get car out of grid
 	 */
 	@Test
-	public void testNegativeCaseOne() {
+	public void testNegativeOffTheGridOne() {
 		position.setXY(1, 1);
 		Position result = rc.move(position, "LF");
 		assertNull(result);
@@ -87,9 +86,9 @@ public class RemoteControlledCarsTest {
 	 * Test case7 for a negative scenario
 	 */
 	@Test
-	public void testNegativeCaseTwo() {
-		position.setXY(1, 1);
-		Position result = rc.move(position, "RFRF");
+	public void testNegativeOffTheGridTwo() {
+		position.setXY(15, 15);
+		Position result = rc.move(position, "F");
 		assertNull(result);
 	}
 
@@ -97,9 +96,9 @@ public class RemoteControlledCarsTest {
 	 * Test case8 for a negative scenario
 	 */
 	@Test
-	public void testNegativeCaseThree() {
+	public void testNegativeOffTheGridThree() {
 		position.setXY(15, 15);
-		Position result = rc.move(position, "F");
+		Position result = rc.move(position, "LFRF");
 		assertNull(result);
 	}
 
@@ -107,72 +106,53 @@ public class RemoteControlledCarsTest {
 	 * Test case9 for a negative scenario
 	 */
 	@Test
-	public void testNegativeCaseFour() {
-		position.setXY(15, 15);
-		Position result = rc.move(position, "LFRF");
-		assertNull(result);
-	}
-
-	/**
-	 * Test case10 for a negative scenario
-	 */
-	@Test
-	public void testNegativeCaseFive() {
-		position.setXY(1, 15);
-		Position result = rc.move(position, "RF");
-		assertNull(result);
-	}
-
-	/**
-	 * Test case11 for a negative scenario
-	 */
-	@Test
-	public void testNegativeCaseSix() {
+	public void testNegativeOffTheGridFour() {
 		position.setXY(15, 1);
 		Position result = rc.move(position, "LF");
 		assertNull(result);
 	}
 
 	/**
-	 * Test case12 for a invalid input
+	 * Test case10 for a out of grid current position
 	 */
 	@Test(expected = RuntimeException.class)
-	public void testInvalidInputOne() {
+	public void testInvalidPosition() {
 		position.setXY(-1, -1);
 		rc.move(position, "LF");
 	}
 
 	/**
-	 * Test case13 for a invalid input
+	 * Test case11 for a invalid command
 	 */
 	@Test(expected = RuntimeException.class)
-	public void testInvalidInputTwo() {
-		position.setXY(16, 16);
-		rc.move(position, "FF");
-	}
-
-	/**
-	 * Test case14 for a invalid input
-	 */
-	@Test(expected = RuntimeException.class)
-	public void testInvalidInputThree() {
+	public void testInvalidCommand() {
 		position.setXY(1, 1);
 		rc.move(position, "ABCDE");
 	}
 
 	/**
-	 * Test case15 for a invalid input
+	 * Test case12 for a null position
 	 */
 	@Test(expected = RuntimeException.class)
-	public void testInvalidInputFour() {
-		rc.move(null, "ABCDE");
+	public void testInvalidNullPosition() {
+		rc.move(null, "FF");
 	}
 
 	/**
-	 * Test case16 for a invalid input
+	 * Test case13 for a null position and null command
 	 */
 	@Test(expected = RuntimeException.class)
-	public void testInvalidInputFive() {
+	public void testInvalidNullPositionAndCommand() {
 		rc.move(null, null);
+	}
+
+	/**
+	 * Test case14 for zero grid size
+	 */
+	@Test(expected = RuntimeException.class)
+	public void testInvalidZeroGridSize() {
+		RemoteControlledCars rc2 = new RemoteControlledCars(0, 0);
+		position.setXY(1, 1);
+		rc2.move(position, "F");
 	}
 }
